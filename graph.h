@@ -314,6 +314,8 @@ class Graph
         void make_example();
         void chargement_fichier(std::string file_name);
         void sauvegarder(std::string file_name);
+        void supprimer(int idx);
+        void ajouter_sommet();
 
         std::shared_ptr<GraphInterface>& getInterface();
 
