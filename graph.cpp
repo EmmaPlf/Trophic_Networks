@@ -162,15 +162,13 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     livre.set_frame(0,80,85,80);
     livre.set_bg_color(BLANCROSE);
 
-<<<<<<< HEAD
+
     m_tool_box.add_child(emeu);
     emeu.set_frame(0,240,80,80);
     emeu.set_bg_color(BLEUCLAIR);
-=======
     m_tool_box.add_child(sauvegarder);
     sauvegarder.set_frame(0,160,85,80);
     sauvegarder.set_bg_color(JAUNESOMBRE);
->>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
 }
 
 
@@ -181,12 +179,8 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 /// "à la main" dans le code comme ça.
 void Graph::make_example()
 {
-<<<<<<< HEAD
-    m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
 
-=======
  m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
->>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
     // La ligne précédente est en gros équivalente à :
     // m_interface = new GraphInterface(50, 0, 750, 600);
 
@@ -243,14 +237,9 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
         m_vertices.erase (idx);
-<<<<<<< HEAD
-        std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
-        // throw "Error adding vertex";
-=======
         m_vertices.clear ();
         //std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
        // throw "Error adding vertex";
->>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
     }
 
     // std::cout << "test 6";
@@ -375,10 +364,6 @@ void Graph::chargement_fichier(std::string file_name)
         for(int i=0; i<ordre; i++)
         {
             fichier >> id_sommet;
-<<<<<<< HEAD
-            // std::cout << id_sommet << " ";
-=======
->>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
             fichier >> x;
             fichier >> y;
             fichier >> nb_individus;
@@ -419,14 +404,9 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     if ( m_edges.find(idx)!=m_edges.end() )
     {
         m_edges.erase (idx);
-<<<<<<< HEAD
-        std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
-        // throw "Error adding edge";
-=======
         m_edges.clear();
         //std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
        // throw "Error adding edge";
->>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
     }
 
     if ( m_vertices.find(id_vert1)==m_vertices.end() || m_vertices.find(id_vert2)==m_vertices.end() )
