@@ -155,16 +155,22 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_bg_color(BLANCJAUNE);
 
     m_tool_box.add_child(asterix);
-    asterix.set_frame(0,0,80,80);
-    asterix.set_bg_color(VERTCLAIR);
+    asterix.set_frame(0,0,85,80);
+    asterix.set_bg_color(VERTSOMBRE);
 
     m_tool_box.add_child(livre);
-    livre.set_frame(0,500,80,80);
+    livre.set_frame(0,80,85,80);
     livre.set_bg_color(BLANCROSE);
 
+<<<<<<< HEAD
     m_tool_box.add_child(emeu);
     emeu.set_frame(0,240,80,80);
     emeu.set_bg_color(BLEUCLAIR);
+=======
+    m_tool_box.add_child(sauvegarder);
+    sauvegarder.set_frame(0,160,85,80);
+    sauvegarder.set_bg_color(JAUNESOMBRE);
+>>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
 }
 
 
@@ -175,8 +181,12 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 /// "à la main" dans le code comme ça.
 void Graph::make_example()
 {
+<<<<<<< HEAD
     m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
 
+=======
+ m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
+>>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
     // La ligne précédente est en gros équivalente à :
     // m_interface = new GraphInterface(50, 0, 750, 600);
 
@@ -233,8 +243,14 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
         m_vertices.erase (idx);
+<<<<<<< HEAD
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
         // throw "Error adding vertex";
+=======
+        m_vertices.clear ();
+        //std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
+       // throw "Error adding vertex";
+>>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
     }
 
     // std::cout << "test 6";
@@ -247,8 +263,95 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
 
     // On peut ajouter directement des vertices dans la map avec la notation crochet :
     m_vertices[idx] = Vertex(value, vi);
+}
 
-    std::cout << "test 13";
+void Graph::sauvegarder(std::string file_name)
+{
+    int x = 0, y = 0, id_sommet = 0, num_arete = 0, connexe=0, id_from=0, id_to=0;
+    double nb_individus = 0;
+    unsigned int ordre = 0;
+    std::string pic_name;
+
+    ///OUVERTURE MODE LECTURE
+    ofstream fichier(file_name, ios::out | ios::trunc);
+
+
+    //OUVERTURE FONCTIONNE
+    if(fichier)
+    {
+        ordre = m_vertices.size();
+        fichier << ordre << std::endl;
+
+        int matrice[ordre][ordre];
+
+            /// INITIALISATION MATRICE
+            for(int i=0; i<ordre; i++)
+            {
+                for(int j=0; j<ordre; j++)
+                {
+                    matrice[i][j]=0;
+                }
+            }
+
+           std::map<int, Vertex>::iterator it;
+           for(it = m_vertices.begin(); it != m_vertices.end(); it ++)
+           {
+                /// RECUPERE LES DONNEES
+                x = it->second.m_interface->m_top_box.get_frame().pos.x;
+                y= it->second.m_interface->m_top_box.get_frame().pos.y;
+                nb_individus = it->second.m_value;
+                pic_name = it->second.m_interface->m_img.get_pic_name();
+
+                /// ECRIT LES DONNEES
+                fichier << id_sommet << " ";
+                fichier << x << " ";
+                fichier << y << " ";
+                fichier << nb_individus << ".0" << " ";
+                fichier << pic_name << std::endl;
+
+                id_sommet++;
+           }
+
+           std::map<int, Edge>::iterator it2;
+           for(it2 = m_edges.begin(); it2 != m_edges.end(); it2 ++)
+               {
+                    /// RECUPERE LES SOMMETS D ARETES
+                    id_to = it2->second.m_to;
+                    id_from = it2->second.m_from;
+
+                   for(int i=0; i<ordre; i++)
+                   {
+                       for(int j=0; j<ordre; j++)
+                       {
+                           if(id_to == i && id_from == j)
+                           matrice[i][j]=1;
+                       }
+                   }
+           }
+
+            for(int i=0; i<ordre; i++)
+                   {
+                       for(int j=0; j<ordre; j++)
+                       {
+                           if(matrice[i][j] == 1)
+                            fichier << "1" << " ";
+                           else fichier << "0" << " ";
+                       }
+
+                       fichier << std::endl;
+                   }
+
+        fichier.close();
+    }
+
+    else
+    {
+        cerr <<"Impossible d'ouvrir le fichier" << std::endl;
+        fichier.close();
+        exit (0);
+    }
+
+
 }
 
 void Graph::chargement_fichier(std::string file_name)
@@ -267,19 +370,18 @@ void Graph::chargement_fichier(std::string file_name)
     if(fichier)
     {
         fichier >> ordre;
-        //std::cout << ordre << " " << std::endl;
 
         /// REMPLIR LE VECTEUR DE SOMMETS
         for(int i=0; i<ordre; i++)
         {
             fichier >> id_sommet;
+<<<<<<< HEAD
             // std::cout << id_sommet << " ";
+=======
+>>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
             fichier >> x;
-            //std::cout << x << " ";
             fichier >> y;
-            //std::cout << y << " ";
             fichier >> nb_individus;
-            //std::cout << nb_individus << " " << std::endl;
             fichier >> pic_name;
 
             add_interfaced_vertex(id_sommet, nb_individus, x, y, pic_name, i);
@@ -309,7 +411,6 @@ void Graph::chargement_fichier(std::string file_name)
         fichier.close();
         exit (0);
     }
-
 }
 
 /// Aide à l'ajout d'arcs interfacés
@@ -318,8 +419,14 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     if ( m_edges.find(idx)!=m_edges.end() )
     {
         m_edges.erase (idx);
+<<<<<<< HEAD
         std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
         // throw "Error adding edge";
+=======
+        m_edges.clear();
+        //std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
+       // throw "Error adding edge";
+>>>>>>> 86e49b1ef2d134debddbcf6a4e386b3252957738
     }
 
     if ( m_vertices.find(id_vert1)==m_vertices.end() || m_vertices.find(id_vert2)==m_vertices.end() )
@@ -327,13 +434,19 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
         m_edges.erase (id_vert1);
         m_edges.erase (id_vert2);
 
-        std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
+       // std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
         //throw "Error adding edge";
     }
 
     EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
     m_interface->m_main_box.add_child(ei->m_top_edge);
     m_edges[idx] = Edge(weight, ei);
+
+    m_edges[idx].m_from = id_vert1;
+    m_edges[idx].m_to = id_vert2;
+
+    m_vertices[id_vert1].m_out.push_back(idx);
+    m_vertices[id_vert2].m_in.push_back(idx);
 }
 
 void Graph::ajouter_sommet()///modif
