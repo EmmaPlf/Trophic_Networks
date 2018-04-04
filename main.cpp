@@ -32,11 +32,10 @@ int main()
      //grman::show_picture(grman::page,"Asterix.bmp", 23,5,0);
 
 
-         g.getInterface()->getAsterix().interact_focus();
-          std::cout << std::endl << g.getInterface()->getAsterix().get_value();
+    g.getInterface()->getAsterix().interact_focus();
 
     if(g.getInterface()->getAsterix().clicked()==true &&  asterix == false )
-        {
+       {
             g.chargement_fichier("Asterix.txt");
             asterix = true;
             livre = false;
@@ -55,7 +54,25 @@ int main()
                 asterix = false;
             }
 
-     }
+            else
+            {
+                g.getInterface()->getSauvegarder().interact_focus();
+
+                if(g.getInterface()->getSauvegarder().clicked()==true && livre == false)
+                {
+                    g.sauvegarder("Asterix.txt");
+                }
+
+                g.getInterface()->getSauvegarder().interact_focus();
+
+                if(g.getInterface()->getSauvegarder().clicked()==true && asterix == false)
+                {
+                    g.sauvegarder("Livre_jungle.txt");
+                }
+            }
+
+        }
+
 
         /// Mise à jour générale (clavier/souris/buffer etc...)
         grman::mettre_a_jour();

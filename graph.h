@@ -265,6 +265,7 @@ class GraphInterface
 
         grman::WidgetButton asterix;
         grman::WidgetButton livre;
+        grman::WidgetButton sauvegarder;
 
 
         // A compléter éventuellement par des widgets de décoration ou
@@ -277,6 +278,7 @@ class GraphInterface
         GraphInterface(int x, int y, int w, int h);
         grman::WidgetButton& getAsterix();
         grman::WidgetButton& getLivre();
+        grman::WidgetButton& getSauvegarder() {return sauvegarder;};
 };
 
 
@@ -311,7 +313,7 @@ class Graph
         /// de chargement de fichiers par exemple.
         void make_example();
         void chargement_fichier(std::string file_name);
-        void supprimer(int idx);
+        void sauvegarder(std::string file_name);
 
         std::shared_ptr<GraphInterface>& getInterface();
 
