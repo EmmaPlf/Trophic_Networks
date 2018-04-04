@@ -332,6 +332,20 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_edges[idx] = Edge(weight, ei);
 }
 
+void Graph::ajouter_sommet()///modif
+{
+    if ((mouse_b&1)&&(mouse_x>700)&&(mouse_x<770)&&(mouse_y>140)&&(mouse_y<150))
+           {
+
+               add_interfaced_vertex(12, 700, 200, 100, "Emeu.jpg");
+               add_interfaced_edge(20,12,1,20.0);
+            // std::cout<<m_vertices[8].m_interface->m_top_box.get_posx()<<std::endl;
+//             std::cout<<m_vertices[8].m_interface->m_top_box.get_posy()<<std::endl;
+
+               update();///MERCI THIBAUD
+           }
+}
+
  std::shared_ptr<GraphInterface>& Graph::getInterface()
  {
      return m_interface;

@@ -1,6 +1,6 @@
 #include "grman/grman.h"
 #include <iostream>
-
+#include "menu.h"
 #include "graph.h"
 
 //BITMAP* charger = load_bitmap("Charger.bmp", NULL);
@@ -18,15 +18,21 @@ int main()
     /// CHARGEMENT DU GRAPHE
     Graph g;
     g.make_example();
-
+Menu m;
+m.load();
     ///g.chargement_fichier("Asterix.txt");
-
+while(m.display()!=1)
+{
+     m.display();
+     grman::mettre_a_jour();
+}
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )
     while ( !key[KEY_ESC] )
     {
         /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
         g.update();
+
 
      //grman::show_picture(grman::page,"Asterix.bmp", 23,5,0);
      //grman::show_picture(grman::page,"Asterix.bmp", 23,5,0);
@@ -56,7 +62,7 @@ int main()
             }
 
      }
-
+g.ajouter_sommet();
         /// Mise à jour générale (clavier/souris/buffer etc...)
         grman::mettre_a_jour();
     }
