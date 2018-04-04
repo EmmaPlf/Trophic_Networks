@@ -265,6 +265,7 @@ class GraphInterface
 
         grman::WidgetButton asterix;
         grman::WidgetButton livre;
+        grman::WidgetButton emeu;
 
 
         // A compléter éventuellement par des widgets de décoration ou
@@ -277,6 +278,7 @@ class GraphInterface
         GraphInterface(int x, int y, int w, int h);
         grman::WidgetButton& getAsterix();
         grman::WidgetButton& getLivre();
+          grman::WidgetButton& getEmeu(){return emeu;};
 };
 
 
