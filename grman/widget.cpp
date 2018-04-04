@@ -221,9 +221,11 @@ void WidgetCheckBox::interact_focus()
 
 void WidgetButton::interact_focus()
 {
-    if ( mouse_b && mouse_x < get_frame().dim.x + get_frame().pos.x && mouse_x > get_frame().pos.x && mouse_y < get_frame().dim.y + get_frame().pos.y && mouse_y > get_frame().pos.y)
+    if ( mouse_click && mouse_x < get_frame().dim.x + get_frame().pos.x && mouse_x > get_frame().pos.x && mouse_y < get_frame().dim.y + get_frame().pos.y && mouse_y > get_frame().pos.y)
        {
+          // std::cout << "test boucle";
            m_value = true;
+           //std::cout << m_value;
        }
 }
 

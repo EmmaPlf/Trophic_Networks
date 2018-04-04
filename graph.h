@@ -311,6 +311,7 @@ class Graph
         /// de chargement de fichiers par exemple.
         void make_example();
         void chargement_fichier(std::string file_name);
+        void supprimer(int idx);
 
         std::shared_ptr<GraphInterface>& getInterface();
 

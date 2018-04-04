@@ -159,7 +159,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     asterix.set_bg_color(VERTCLAIR);
 
     m_tool_box.add_child(livre);
-    livre.set_frame(0,80,80,80);
+    livre.set_frame(0,500,80,80);
     livre.set_bg_color(BLANCROSE);
 }
 
@@ -228,9 +228,12 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
 {
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
+        m_vertices.erase (idx);
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
-        throw "Error adding vertex";
+       // throw "Error adding vertex";
     }
+
+   // std::cout << "test 6";
 
     // Création d'une interface de sommet
     VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
@@ -240,6 +243,8 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
 
     // On peut ajouter directement des vertices dans la map avec la notation crochet :
     m_vertices[idx] = Vertex(value, vi);
+
+    std::cout << "test 13";
 }
 
 void Graph::chargement_fichier(std::string file_name)
@@ -273,7 +278,7 @@ void Graph::chargement_fichier(std::string file_name)
             //std::cout << nb_individus << " " << std::endl;
             fichier >> pic_name;
 
-            add_interfaced_vertex(id_sommet, nb_individus, x, y, pic_name);
+            add_interfaced_vertex(id_sommet, nb_individus, x, y, pic_name, i);
         }
 
         // REMPLIR LE VECTEUR D ARETES
@@ -308,14 +313,18 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 {
     if ( m_edges.find(idx)!=m_edges.end() )
     {
+        m_edges.erase (idx);
         std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
-        throw "Error adding edge";
+       // throw "Error adding edge";
     }
 
     if ( m_vertices.find(id_vert1)==m_vertices.end() || m_vertices.find(id_vert2)==m_vertices.end() )
     {
+         m_edges.erase (id_vert1);
+         m_edges.erase (id_vert2);
+
         std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
-        throw "Error adding edge";
+        //throw "Error adding edge";
     }
 
     EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
@@ -335,6 +344,5 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 
 grman::WidgetButton& GraphInterface::getLivre()
  {
-     return asterix;
+     return livre;
  }
-

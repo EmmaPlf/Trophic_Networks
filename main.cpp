@@ -19,8 +19,7 @@ int main()
     Graph g;
     g.make_example();
 
-    Graph g2;
-    g2.make_example();
+    ///g.chargement_fichier("Asterix.txt");
 
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )
@@ -30,25 +29,33 @@ int main()
         g.update();
 
      //grman::show_picture(grman::page,"Asterix.bmp", 23,5,0);
-
-     g.getInterface()->getAsterix().interact_focus();
-
-     if(g.getInterface()->getAsterix().clicked()==true &&  asterix == false )
-        {
-             g.chargement_fichier("Asterix.txt");
-                asterix = true;
-        }
-
      //grman::show_picture(grman::page,"Asterix.bmp", 23,5,0);
 
-     g2.getInterface()->getLivre().interact_focus();
 
-     if(g2.getInterface()->getLivre().clicked()==true && livre == false)
+         g.getInterface()->getAsterix().interact_focus();
+          std::cout << std::endl << g.getInterface()->getAsterix().get_value();
+
+    if(g.getInterface()->getAsterix().clicked()==true &&  asterix == false )
         {
-             g2.chargement_fichier("Livre_jungle.txt");
-             livre = true;
+            g.chargement_fichier("Asterix.txt");
+            asterix = true;
+            livre = false;
         }
 
+
+     else
+        {
+
+        g.getInterface()->getLivre().interact_focus();
+
+           if(g.getInterface()->getLivre().clicked()==true && livre == false)
+            {
+                g.chargement_fichier("Livre_jungle.txt");
+                livre = true;
+                asterix = false;
+            }
+
+     }
 
         /// Mise à jour générale (clavier/souris/buffer etc...)
         grman::mettre_a_jour();

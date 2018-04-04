@@ -264,7 +264,7 @@ class WidgetButton : public Widget
         virtual void interact_focus();
         virtual bool captures_focus() { return true; }
 
-        bool clicked() { bool clk = m_value; m_value=false; return clk; }
+        bool clicked() { bool clk = m_value; m_value=false; return clk; std::cout << "fuck"; }
         bool get_value() { return m_value; }
         void set_value(bool value) { m_value = value; }
 };
