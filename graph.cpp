@@ -20,7 +20,7 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
 
     // Le slider de réglage de valeur
     m_top_box.add_child( m_slider_value );
-    m_slider_value.set_range(0.0 , 100.0); // Nombre de gens
+    m_slider_value.set_range(0.0, 100.0);  // Nombre de gens
     m_slider_value.set_dim(20,80);
     m_slider_value.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Up);
 
@@ -108,7 +108,7 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to)
 
     // Le slider de réglage de valeur
     m_box_edge.add_child( m_slider_weight );
-    m_slider_weight.set_range(0.0 , 100.0); // Valeurs arbitraires, à adapter...
+    m_slider_weight.set_range(0.0, 100.0);  // Valeurs arbitraires, à adapter...
     m_slider_weight.set_dim(16,40);
     m_slider_weight.set_gravity_y(grman::GravityY::Up);
 
@@ -173,6 +173,10 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     livre.set_frame(0,80,85,80);
     livre.set_bg_color(BLANCROSE);
 
+
+    m_tool_box.add_child(emeu);
+    emeu.set_frame(0,240,80,80);
+    emeu.set_bg_color(BLEUCLAIR);
     m_tool_box.add_child(sauvegarder);
     sauvegarder.set_frame(0,160,85,80);
     sauvegarder.set_bg_color(JAUNESOMBRE);
@@ -190,6 +194,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 /// "à la main" dans le code comme ça.
 void Graph::make_example()
 {
+
  m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
     // La ligne précédente est en gros équivalente à :
     // m_interface = new GraphInterface(50, 0, 750, 600);
@@ -249,9 +254,13 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
         m_vertices.erase (idx);
         m_vertices.clear();
 
+<<<<<<< HEAD
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
         throw "Error adding vertex";
     }
+=======
+    // std::cout << "test 6";
+>>>>>>> 368084a6715d0ad773c7c81ea38fc7319580857a
 
     // Création d'une interface de sommet
     VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
@@ -378,11 +387,8 @@ void Graph::chargement_fichier(std::string file_name)
         for(int i=0; i<nb_aretes; i++)
         {
                 fichier >> num_arete;
-                std::cout << num_arete;
                 fichier >> s1;
-                std::cout << s1;
                 fichier >> s2;
-                std::cout << s2 << " ";
 
                 add_interfaced_edge(num_arete, s1, s2, 0.0);
         }
@@ -412,8 +418,8 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 
     if ( m_vertices.find(id_vert1)==m_vertices.end() || m_vertices.find(id_vert2)==m_vertices.end() )
     {
-         m_edges.erase (id_vert1);
-         m_edges.erase (id_vert2);
+        m_edges.erase (id_vert1);
+        m_edges.erase (id_vert2);
 
         std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
         throw "Error adding edge";
@@ -432,19 +438,39 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 
 void Graph::ajouter_sommet()///modif
 {
-    if ((mouse_b&1)&&(mouse_x>700)&&(mouse_x<770)&&(mouse_y>140)&&(mouse_y<150))
-           {
+    std::string test_string="";
+//grman::WidgetButton bouton_emeu;
+    if ((mouse_b&1)&&(mouse_x>30)&&(mouse_x<80)&&(mouse_y>140)&&(mouse_y<150))
+    {
+        //int coordo;
+        //coordo=m_vertices.end();
 
-               add_interfaced_vertex(12, 700, 200, 100, "Emeu.jpg");
-               add_interfaced_edge(20,12,1,20.0);
-            // std::cout<<m_vertices[8].m_interface->m_top_box.get_posx()<<std::endl;
+        for (std::map<int,Vertex>::iterator it=m_vertices.begin(); it!=m_vertices.end(); ++it)
+        {
+            ///si emeu existe -> add_interfaced_vertex ... emeu
+            //if(m_vertices.it)
+            test_string=it->second.m_interface->m_img.get_pic_name();
+
+
+        }
+        if(test_string!="Emeu.jpg")
+                {add_interfaced_vertex(m_vertices.size(), 90, 200, 100, "Emeu.jpg");
+                 add_interfaced_edge(m_edges.size(),m_vertices.size()-1,1,20.0);
+                }
+//std::cout<<"test string: "<<test_string<<std::endl;
+
+
+        //add_interfaced_edge(20,16,1,20.0);
+        // std::cout<<m_vertices[8].m_interface->m_top_box.get_posx()<<std::endl;
 //             std::cout<<m_vertices[8].m_interface->m_top_box.get_posy()<<std::endl;
 
-               update();///MERCI THIBAUD
-           }
+        update();///MERRCI TIBEAU
+
+
+    }
 }
 
-void Graph::supprimer_sommet(int id_sommet, std::string file_name)///modif
+void Graph::supprimer_sommet(int id_sommet, std::string file_name)
 {
 
     std::vector<int> ind_aretes;
@@ -480,12 +506,12 @@ void Graph::supprimer_sommet(int id_sommet, std::string file_name)///modif
      return m_interface;
  }
 
- grman::WidgetButton& GraphInterface::getAsterix()
- {
-     return asterix;
- }
+grman::WidgetButton& GraphInterface::getAsterix()
+{
+    return asterix;
+}
 
 grman::WidgetButton& GraphInterface::getLivre()
- {
-     return livre;
- }
+{
+    return livre;
+}

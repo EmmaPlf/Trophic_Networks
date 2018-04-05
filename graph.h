@@ -269,6 +269,7 @@ class GraphInterface
 
         grman::WidgetButton asterix;
         grman::WidgetButton livre;
+        grman::WidgetButton emeu;
         grman::WidgetButton sauvegarder;
         grman::WidgetButton supprimer;
 
@@ -283,6 +284,7 @@ class GraphInterface
         GraphInterface(int x, int y, int w, int h);
         grman::WidgetButton& getAsterix();
         grman::WidgetButton& getLivre();
+          grman::WidgetButton& getEmeu(){return emeu;};
         grman::WidgetButton& getSauvegarder() {return sauvegarder;};
         grman::WidgetButton& getSupprimer() {return supprimer;};
 };
