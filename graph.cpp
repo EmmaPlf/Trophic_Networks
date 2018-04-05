@@ -254,13 +254,10 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
         m_vertices.erase (idx);
         m_vertices.clear();
 
-<<<<<<< HEAD
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
         throw "Error adding vertex";
     }
-=======
-    // std::cout << "test 6";
->>>>>>> 368084a6715d0ad773c7c81ea38fc7319580857a
+
 
     // Création d'une interface de sommet
     VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
