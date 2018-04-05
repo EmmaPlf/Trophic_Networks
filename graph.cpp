@@ -11,6 +11,7 @@ using namespace std;
 
 /// Le constructeur met en place les éléments de l'interface
 VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, int pic_idx)
+:m_presence(true)
 {
     // La boite englobante
     m_top_box.set_pos(x, y);
@@ -28,7 +29,7 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
     m_label_value.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Down);
 
     // Une illustration...
-    if (pic_name!="")
+    if(pic_name!="")
     {
         m_top_box.add_child( m_img );
         m_img.set_pic_name(pic_name);
@@ -46,6 +47,15 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
     m_label_idx.set_message( std::to_string(idx) );
 }
 
+bool VertexInterface::getPresence() const
+{
+    return m_presence;
+}
+
+void VertexInterface::setPresence(bool presence)
+{
+    m_presence = presence;
+}
 
 /// Gestion du Vertex avant l'appel à l'interface
 void Vertex::pre_update()
@@ -86,6 +96,7 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to)
         std::cerr << "Error creating EdgeInterface between vertices having no interface" << std::endl;
         throw "Bad EdgeInterface instanciation";
     }
+
     m_top_edge.attach_from(from.m_interface->m_top_box);
     m_top_edge.attach_to(to.m_interface->m_top_box);
     m_top_edge.reset_arrow_with_bullet();
@@ -165,6 +176,10 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_tool_box.add_child(sauvegarder);
     sauvegarder.set_frame(0,160,85,80);
     sauvegarder.set_bg_color(JAUNESOMBRE);
+
+    m_tool_box.add_child(supprimer);
+    supprimer.set_frame(0,320,85,80);
+    supprimer.set_bg_color(VERTCLAIR);
 }
 
 
@@ -232,12 +247,11 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
         m_vertices.erase (idx);
-        m_vertices.clear ();
-        //std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
-       // throw "Error adding vertex";
-    }
+        m_vertices.clear();
 
-   // std::cout << "test 6";
+        std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
+        throw "Error adding vertex";
+    }
 
     // Création d'une interface de sommet
     VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
@@ -251,31 +265,17 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
 
 void Graph::sauvegarder(std::string file_name)
 {
-    int x = 0, y = 0, id_sommet = 0, num_arete = 0, connexe=0, id_from=0, id_to=0;
+    int x = 0, y = 0, id_sommet = 0, num_arete = 0, connexe=0;
     double nb_individus = 0;
-    unsigned int ordre = 0;
     std::string pic_name;
 
     ///OUVERTURE MODE LECTURE
     ofstream fichier(file_name, ios::out | ios::trunc);
 
-
     //OUVERTURE FONCTIONNE
     if(fichier)
     {
-        ordre = m_vertices.size();
-        fichier << ordre << std::endl;
-
-        int matrice[ordre][ordre];
-
-            /// INITIALISATION MATRICE
-            for(int i=0; i<ordre; i++)
-            {
-                for(int j=0; j<ordre; j++)
-                {
-                    matrice[i][j]=0;
-                }
-            }
+        fichier << m_vertices.size() << std::endl;
 
            std::map<int, Vertex>::iterator it;
            for(it = m_vertices.begin(); it != m_vertices.end(); it ++)
@@ -287,43 +287,44 @@ void Graph::sauvegarder(std::string file_name)
                 pic_name = it->second.m_interface->m_img.get_pic_name();
 
                 /// ECRIT LES DONNEES
-                fichier << id_sommet << " ";
+                fichier << it->first << " ";
                 fichier << x << " ";
                 fichier << y << " ";
                 fichier << nb_individus << ".0" << " ";
                 fichier << pic_name << std::endl;
-
-                id_sommet++;
            }
+
+           fichier << m_edges.size() << std::endl;
 
            std::map<int, Edge>::iterator it2;
            for(it2 = m_edges.begin(); it2 != m_edges.end(); it2 ++)
                {
                     /// RECUPERE LES SOMMETS D ARETES
-                    id_to = it2->second.m_to;
-                    id_from = it2->second.m_from;
+                    fichier << it2->first << " ";
+                    fichier << it2->second.m_from << " ";
+                    fichier << it2->second.m_to << std::endl;
+               }
+//                   for(int i=0; i<ordre; i++)
+//                   {
+//                       for(int j=0; j<ordre; j++)
+//                       {
+//                           if(id_to == i && id_from == j)
+//                           matrice[i][j]=1;
+//                       }
+//                   }
+//           }
+//
+//            for(int i=0; i<ordre; i++)
+//                   {
+//                       for(int j=0; j<ordre; j++)
+//                       {
+//                           if(matrice[i][j] == 1)
+//                            fichier << "1" << " ";
+//                           else fichier << "0" << " ";
+//                       }
 
-                   for(int i=0; i<ordre; i++)
-                   {
-                       for(int j=0; j<ordre; j++)
-                       {
-                           if(id_to == i && id_from == j)
-                           matrice[i][j]=1;
-                       }
-                   }
-           }
-
-            for(int i=0; i<ordre; i++)
-                   {
-                       for(int j=0; j<ordre; j++)
-                       {
-                           if(matrice[i][j] == 1)
-                            fichier << "1" << " ";
-                           else fichier << "0" << " ";
-                       }
-
-                       fichier << std::endl;
-                   }
+//                       fichier << std::endl;
+//                   }
 
         fichier.close();
     }
@@ -340,10 +341,13 @@ void Graph::sauvegarder(std::string file_name)
 
 void Graph::chargement_fichier(std::string file_name)
 {
-    int x = 0, y = 0, id_sommet = 0, num_arete = 0, connexe=0;
+    int x = 0, y = 0, id_sommet = 0, num_arete = 0, connexe=0, s1=0, s2=0;
     double nb_individus = 0;
-    unsigned int ordre = 0;
+    unsigned int ordre = 0, nb_aretes;
     std::string pic_name;
+
+    m_vertices.clear();
+    m_edges.clear();
 
     m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
 
@@ -367,19 +371,20 @@ void Graph::chargement_fichier(std::string file_name)
             add_interfaced_vertex(id_sommet, nb_individus, x, y, pic_name, i);
         }
 
-        // REMPLIR LE VECTEUR D ARETES
-        for(int i=0; i<ordre; i++) /// LIGNES
-        {
-            for(int j=0; j<ordre; j++) /// COLONNES
-            {
-                fichier >> connexe;
+        fichier >> nb_aretes;
+        std::cout << nb_aretes;
 
-                if(connexe!= 0)
-                {
-                    add_interfaced_edge(num_arete, i, j, 0.0);
-                    num_arete ++;
-                }
-             }
+        // REMPLIR LE VECTEUR D ARETES
+        for(int i=0; i<nb_aretes; i++)
+        {
+                fichier >> num_arete;
+                std::cout << num_arete;
+                fichier >> s1;
+                std::cout << s1;
+                fichier >> s2;
+                std::cout << s2 << " ";
+
+                add_interfaced_edge(num_arete, s1, s2, 0.0);
         }
 
         fichier.close();
@@ -400,8 +405,9 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     {
         m_edges.erase (idx);
         m_edges.clear();
-        //std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
-       // throw "Error adding edge";
+
+        std::cerr << "Error adding edge at idx=" << idx << " already used..." << std::endl;
+        throw "Error adding edge";
     }
 
     if ( m_vertices.find(id_vert1)==m_vertices.end() || m_vertices.find(id_vert2)==m_vertices.end() )
@@ -409,8 +415,8 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
          m_edges.erase (id_vert1);
          m_edges.erase (id_vert2);
 
-       // std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
-        //throw "Error adding edge";
+        std::cerr << "Error adding edge idx=" << idx << " between vertices " << id_vert1 << " and " << id_vert2 << " not in m_vertices" << std::endl;
+        throw "Error adding edge";
     }
 
     EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
@@ -420,8 +426,8 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_edges[idx].m_from = id_vert1;
     m_edges[idx].m_to = id_vert2;
 
-    m_vertices[id_vert1].m_out.push_back(idx);
-    m_vertices[id_vert2].m_in.push_back(idx);
+    m_vertices[id_vert1].m_out.push_back(id_vert2);
+    m_vertices[id_vert2].m_in.push_back(id_vert1);
 }
 
 void Graph::ajouter_sommet()///modif
@@ -436,6 +442,37 @@ void Graph::ajouter_sommet()///modif
 
                update();///MERCI THIBAUD
            }
+}
+
+void Graph::supprimer_sommet(int id_sommet, std::string file_name)///modif
+{
+
+    std::vector<int> ind_aretes;
+
+    m_interface->m_main_box.remove_child(m_vertices[id_sommet].m_interface->m_top_box);
+    m_vertices.erase(id_sommet);
+
+    std::map<int, Edge>:: iterator it;
+    for(it=m_edges.begin(); it!=m_edges.end(); it++)
+    {
+        if(it->second.m_to == id_sommet || it->second.m_from == id_sommet)
+        {
+            ind_aretes.push_back(it->first); // Pas le choix sinon il parcours des artes qui ont été supprimées auparavant
+            m_interface->m_main_box.remove_child(it->second.m_interface->m_top_edge); // on supprime de l'interface
+        }
+    }
+
+    if(ind_aretes.size()!=0)
+    {
+        for(int i=0; i<ind_aretes.size(); i++)
+        {
+            m_edges.erase(ind_aretes[i]);
+        }
+    }
+
+    sauvegarder(file_name);
+    chargement_fichier(file_name);
+    update();
 }
 
  std::shared_ptr<GraphInterface>& Graph::getInterface()

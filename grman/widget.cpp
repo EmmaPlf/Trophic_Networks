@@ -313,7 +313,10 @@ void WidgetImage::draw()
             m_pic_idx = (m_pic_idx+1) % get_picture_nb(m_pic_name);
         }
     }
+
+    if(m_pic_name != " ")
     show_picture(m_view, m_pic_name, 0, 0, m_pic_idx);
+
 }
 
 /***************************************************

@@ -68,14 +68,14 @@
 	"grman/grman.h"
 	"grman/widget.h"
 
-1522860678 source:\\mac\home\trophic_networks\graph.cpp
+1522939771 source:\\mac\home\trophic_networks\graph.cpp
 	"graph.h"
 	<fstream>
 	<iostream>
 	<stdlib.h>
 	<string>
 
-1522861522 \\mac\home\trophic_networks\graph.h
+1522929061 \\mac\home\trophic_networks\graph.h
 	<vector>
 	<map>
 	<string>
@@ -119,7 +119,7 @@
 	<loadpng.h>
 	<jpgalleg.h>
 
-1522860678 source:\\mac\home\trophic_networks\grman\widget.cpp
+1522873388 source:\\mac\home\trophic_networks\grman\widget.cpp
 	"widget.h"
 
 1522860678 source:\\mac\home\trophic_networks\menu.cpp
@@ -130,4 +130,10 @@
 1522860678 \\mac\home\trophic_networks\menu.h
 	"grman/grman.h"
 	"grman/widget.h"
+
+1522936301 source:\\mac\home\trophic_networks\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"menu.h"
+	"graph.h"
 

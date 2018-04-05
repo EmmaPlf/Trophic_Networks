@@ -108,6 +108,8 @@ class VertexInterface
         // Une image de "remplissage"
         grman::WidgetImage m_img;
 
+        bool m_presence;
+
         // Un label indiquant l'index du sommet
         grman::WidgetText m_label_idx;
 
@@ -119,6 +121,8 @@ class VertexInterface
         // Le constructeur met en place les éléments de l'interface
         // voir l'implémentation dans le .cpp
         VertexInterface(int idx, int x, int y, std::string pic_name="", int pic_idx=0);
+        bool getPresence() const;
+        void setPresence(bool presence);
 };
 
 
@@ -266,6 +270,7 @@ class GraphInterface
         grman::WidgetButton asterix;
         grman::WidgetButton livre;
         grman::WidgetButton sauvegarder;
+        grman::WidgetButton supprimer;
 
 
         // A compléter éventuellement par des widgets de décoration ou
@@ -279,6 +284,7 @@ class GraphInterface
         grman::WidgetButton& getAsterix();
         grman::WidgetButton& getLivre();
         grman::WidgetButton& getSauvegarder() {return sauvegarder;};
+        grman::WidgetButton& getSupprimer() {return supprimer;};
 };
 
 
@@ -295,6 +301,8 @@ class Graph
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
+
+        int m_ordre;
 
 
     public:
@@ -314,8 +322,8 @@ class Graph
         void make_example();
         void chargement_fichier(std::string file_name);
         void sauvegarder(std::string file_name);
-        void supprimer(int idx);
         void ajouter_sommet();
+        void supprimer_sommet(int in_sommet, std::string file_name);
 
         std::shared_ptr<GraphInterface>& getInterface();
 
