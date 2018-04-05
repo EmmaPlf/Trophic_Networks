@@ -42,11 +42,6 @@ int main()
         //grman::show_picture(grman::page,"Asterix.bmp", 23,5,0);
         //grman::show_picture(grman::page,"Asterix.bmp", 23,5,0);
 
-        if (asterix==true)
-        {
-            grman::show_picture(grman::page,"Emeu2.jpg",21,245,0);
-        }
-
         /// DETECTION DES CLICKS DE BOUTONS
         g.getInterface()->getAsterix().interact_focus();
 
@@ -72,11 +67,18 @@ int main()
 
             else
             {
-                g.getInterface()->getEmeu().interact_focus();
+                g.getInterface()->getAjouter().interact_focus();
 
-                if(g.getInterface()->getEmeu().clicked()==true)
+                if(g.getInterface()->getAjouter().clicked()==true && livre == false)
                 {
-                    ///appeler ajouter emeu
+                    g.ajouter_sommet("Asterix.txt");
+                }
+
+                g.getInterface()->getAjouter().interact_focus();
+
+                if(g.getInterface()->getAjouter().clicked()==true && asterix == false)
+                {
+                    g.ajouter_sommet("Livre_jungle.txt");
                 }
 
                 else

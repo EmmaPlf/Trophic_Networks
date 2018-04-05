@@ -173,13 +173,13 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     livre.set_frame(0,80,85,80);
     livre.set_bg_color(BLANCROSE);
 
-
-    m_tool_box.add_child(emeu);
-    emeu.set_frame(0,240,80,80);
-    emeu.set_bg_color(BLEUCLAIR);
     m_tool_box.add_child(sauvegarder);
     sauvegarder.set_frame(0,160,85,80);
     sauvegarder.set_bg_color(JAUNESOMBRE);
+
+    m_tool_box.add_child(ajouter);
+    ajouter.set_frame(0,240,80,80);
+    ajouter.set_bg_color(BLEUCLAIR);
 
     m_tool_box.add_child(supprimer);
     supprimer.set_frame(0,320,85,80);
@@ -433,38 +433,54 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_vertices[id_vert2].m_in.push_back(id_vert1);
 }
 
-void Graph::ajouter_sommet()///modif
+void Graph::ajouter_sommet(std::string file_name)
 {
     std::string test_string="";
-//grman::WidgetButton bouton_emeu;
-    if ((mouse_b&1)&&(mouse_x>30)&&(mouse_x<80)&&(mouse_y>140)&&(mouse_y<150))
-    {
-        //int coordo;
-        //coordo=m_vertices.end();
+    int choix = 0;
+    int cmp_emeu = 0, cmp_idefix = 0;
 
-        for (std::map<int,Vertex>::iterator it=m_vertices.begin(); it!=m_vertices.end(); ++it)
+        std::cout << std::endl << "Choisir l'animal a ajouter: " << std::endl << std::endl;
+        std::cout << "1) Emeu" << std::endl << "2) Idefix " << std::endl;
+        std::cin >> choix;
+
+        std::map< int, Vertex >::iterator it;
+        for (it = m_vertices.begin(); it != m_vertices.end(); ++it)
         {
-            ///si emeu existe -> add_interfaced_vertex ... emeu
-            //if(m_vertices.it)
-            test_string=it->second.m_interface->m_img.get_pic_name();
+            switch(choix)
+            {
+                case 1:
+                        if( "Emeu.jpg" != it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_emeu++;
+                        }
+                        break;
 
-
+                case 2:
+                        if( "Idefix.jpg" != it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_idefix++;
+                        }
+                        break;
+            }
         }
-        if(test_string!="Emeu.jpg")
-                {add_interfaced_vertex(m_vertices.size(), 90, 200, 100, "Emeu.jpg");
+
+            if(cmp_emeu == m_vertices.size())
+            {
+                 add_interfaced_vertex(m_vertices.size(), 90, 200, 100, "Emeu.jpg");
                  add_interfaced_edge(m_edges.size(),m_vertices.size()-1,1,20.0);
-                }
-//std::cout<<"test string: "<<test_string<<std::endl;
+            }
 
+            else if(cmp_idefix == m_vertices.size())
+            {
+                 add_interfaced_vertex(m_vertices.size(), 90, 200, 100, "Idefix.jpg");
+                 add_interfaced_edge(m_edges.size(),m_vertices.size()-1,1,20.0);
+            }
+            else std::cout << "L'espece selectionnee est deja presente" << std::endl;
 
-        //add_interfaced_edge(20,16,1,20.0);
-        // std::cout<<m_vertices[8].m_interface->m_top_box.get_posx()<<std::endl;
-//             std::cout<<m_vertices[8].m_interface->m_top_box.get_posy()<<std::endl;
+        sauvegarder(file_name);
+        chargement_fichier(file_name);
+        update();
 
-        update();///MERRCI TIBEAU
-
-
-    }
 }
 
 void Graph::supprimer_sommet(int id_sommet, std::string file_name)

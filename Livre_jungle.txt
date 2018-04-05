@@ -1,5 +1,5 @@
 7
-0 30 30 2.0 Kaa.jpg
+0 26 312 2.0 Kaa.jpg
 1 500 200 1.0 Mowgli.jpg
 2 200 200 2.0 Baloo.jpg
 3 500 30 2.0 Poisson.jpg
