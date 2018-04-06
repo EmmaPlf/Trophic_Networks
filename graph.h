@@ -305,6 +305,10 @@ class Graph
         std::shared_ptr<GraphInterface> m_interface = nullptr;
 
         int m_ordre;
+        int nb_morts;
+        int nb_aretes_mortes;
+
+std::map<int, Vertex> m_cimetiere;
 
 
     public:
@@ -312,7 +316,7 @@ class Graph
         /// Les constructeurs sont à compléter selon vos besoin...
         /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
         Graph (GraphInterface *interface=nullptr) :
-            m_interface(interface)  {  }
+            m_interface(interface), nb_morts(0), nb_aretes_mortes(0)  {  }
 
         void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);

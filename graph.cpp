@@ -178,11 +178,11 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     sauvegarder.set_bg_color(JAUNESOMBRE);
 
     m_tool_box.add_child(ajouter);
-    ajouter.set_frame(0,240,80,80);
+    ajouter.set_frame(0,240,85,80);
     ajouter.set_bg_color(BLEUCLAIR);
 
     m_tool_box.add_child(supprimer);
-    supprimer.set_frame(0,320,85,80);
+    supprimer.set_frame(0,520,85,80);
     supprimer.set_bg_color(VERTCLAIR);
 }
 
@@ -437,10 +437,12 @@ void Graph::ajouter_sommet(std::string file_name)
 {
     std::string test_string="";
     int choix = 0;
-    int cmp_emeu = 0, cmp_idefix = 0;
+    int cmp_emeu = 0, cmp_idefix = 0,cmp_gaulois=0, cmp_romain=0,cmp_sanglier=0,cmp_souris=0,cmp_gland=0,cmp_crocodile=0,cmp_chevre=0;
+    int cmp_plante=0, cmp_organique=0, cmp_vers=0, cmp_potion=0;
 
         std::cout << std::endl << "Choisir l'animal a ajouter: " << std::endl << std::endl;
-        std::cout << "1) Emeu" << std::endl << "2) Idefix " << std::endl;
+            std::cout << "1) Emeu" << std::endl << "2) Idefix " << std::endl<<"3) Gaulois "<<std::endl<<"4) Romain "<<std::endl<<"5) Sanglier"<<std::endl<<"6) Souris"<<std::endl<<"7) Gland"<<std::endl<<"8) Crocodiles"<<std::endl;
+            std::cout<<"9) Chevre"<<std::endl<<"10) Plante"<<std::endl<<"11) Organique"<<std::endl<<"12) Vers"<<std::endl<<"13) Potion"<<std::endl;
         std::cin >> choix;
 
         std::map< int, Vertex >::iterator it;
@@ -461,21 +463,203 @@ void Graph::ajouter_sommet(std::string file_name)
                            cmp_idefix++;
                         }
                         break;
+                case 3:
+                        if("Gaulois.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_gaulois++;
+                        }
+                        break;
+                case 4:
+                        if("Romain.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_romain++;
+                        }
+                        break;
+                 case 5:
+                        if("Sanglier.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_sanglier++;
+                        }
+                        break;
+                case 6:
+                        if("Souris.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_souris++;
+                        }
+                        break;
+                 case 7:
+                        if("Gland.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_gland++;
+                        }
+                        break;
+                case 8:
+                        if("Crocodile.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_crocodile++;
+                        }
+                        break;
+                case 9:
+                        if("Chevre.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_crocodile++;
+                        }
+                        break;
+                case 10:
+                        if("Plante.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_plante++;
+                        }
+                        break;
+                case 11:
+                        if("Organique.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_organique++;
+                        }
+                        break;
+                case 12:
+                        if("Vers.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_vers++;
+                        }
+                        break;
+                case 13:
+                        if("Potion.jpg"!= it->second.m_interface->m_img.get_pic_name())
+                        {
+                           cmp_potion++;
+                        }
+                        break;
             }
         }
 
             if(cmp_emeu == m_vertices.size())
             {
-                 add_interfaced_vertex(m_vertices.size(), 90, 200, 100, "Emeu.jpg");
-                 add_interfaced_edge(m_edges.size(),m_vertices.size()-1,1,20.0);
+                  add_interfaced_vertex(12, 90, 200, 100, "Emeu.jpg",12);
+
+                 add_interfaced_edge(14,12,1,20.0);
+                // nb_morts--;
+                // nb_aretes_mortes--;
             }
 
             else if(cmp_idefix == m_vertices.size())
             {
-                 add_interfaced_vertex(m_vertices.size(), 90, 200, 100, "Idefix.jpg");
-                 add_interfaced_edge(m_edges.size(),m_vertices.size()-1,1,20.0);
+                 //add_interfaced_vertex(m_vertices.size(), 90, 200, 100, "Idefix.jpg",m_vertices.size());
+                 add_interfaced_vertex(3, 90, 200, 100, "Idefix.jpg",3);
+
+                 //add_interfaced_edge(m_edges.size(),m_vertices.size()-1,1,20.0);
+                 add_interfaced_edge(15,3,2,20.0);
+                // nb_morts--;
+                // nb_aretes_mortes--;
             }
+             else if(cmp_gaulois == m_vertices.size())
+            {
+               // std::cout << m_vertices.end()->first+nb_morts;
+                //std::cout << nb_morts;
+                 add_interfaced_vertex(0, 90, 200, 100, "Gaulois.jpg",0);
+
+                 add_interfaced_edge(1,0,1,20.0);
+                 add_interfaced_edge(2,0,2,20.0);
+                 add_interfaced_edge(13,0,11,20.0);
+                 /*add_interfaced_edge(m_edges.end()->first+nb_aretes_mortes+1,m_vertices.end()->first+nb_morts,2,20.0);
+                 add_interfaced_edge(m_edges.end()->first+nb_aretes_mortes+1,m_vertices.end()->first+nb_morts,11,20.0);*/
+
+                 // nb_morts--;
+                  //nb_aretes_mortes--;
+            }
+
+            else if(cmp_romain == m_vertices.size())
+            {
+                add_interfaced_vertex(1, 90, 200, 100, "Romain.jpg",1);
+
+                 add_interfaced_edge(1,0,1,20.0);
+                 add_interfaced_edge(4,1,2,20.0);
+                 add_interfaced_edge(3,1,6,20.0);
+                 add_interfaced_edge(9,
+                                     6,1,20.0);
+                 add_interfaced_edge(14,12,1,20.0);
+                 // add_interfaced_edge(m_edges.end()->first+nb_aretes_mortes+1,m_vertices.end()->first+nb_morts,6,20.0);///arete vers croco
+                 // add_interfaced_edge(m_edges.end()->first+nb_aretes_mortes+1,0,m_vertices.end()->first+nb_morts,20.0);
+                 // nb_morts--;
+                 // nb_aretes_mortes--;
+            }
+             else if(cmp_sanglier == m_vertices.size())
+            {
+                add_interfaced_vertex(2, 90, 200, 100, "Sanglier.jpg",2);
+
+                 //add_interfaced_edge(m_edges.end()->first+nb_aretes_mortes+1,m_vertices.end()->first+nb_morts,7,20.0);
+                  add_interfaced_edge(6,2,5,20.0);
+                   add_interfaced_edge(5,2,4,20.0);
+                    add_interfaced_edge(4,1,2,20.0);
+                    add_interfaced_edge(2,0,2,20.0);
+                 // nb_morts--;
+                 // nb_aretes_mortes--;
+            }
+             else if(cmp_souris == m_vertices.size())
+            {
+                add_interfaced_vertex(4, 90, 200, 100, "Souris.jpg",4);
+
+                 add_interfaced_edge(5,2,4,20.0);
+
+            }
+            else if(cmp_gland == m_vertices.size())
+            {
+                add_interfaced_vertex(5, 90, 200, 100, "Gland.jpg",5);
+
+                 add_interfaced_edge(6,2,5,20.0);
+
+            }
+             else if(cmp_crocodile == m_vertices.size())
+            {
+                add_interfaced_vertex(6, 90, 200, 100, "Crocodile.jpg",6);
+
+                 add_interfaced_edge(9,6,1,20.0);
+                 add_interfaced_edge(3,1,6,20.0);
+                 add_interfaced_edge(8,6,7,20.0);
+
+            }
+            else if(cmp_chevre == m_vertices.size())
+            {
+                add_interfaced_vertex(m_vertices.end()->first+nb_morts+1, 90, 200, 100, "Chevre.jpg",m_vertices.end()->first+nb_morts+1);
+
+                 add_interfaced_edge(m_edges.end()->first+nb_aretes_mortes+1,m_vertices.end()->first+nb_morts,3,20.0);
+
+            }
+            else if(cmp_plante == m_vertices.size())
+            {
+                add_interfaced_vertex(8, 90, 200, 100, "Plante.jpg",8);
+
+                 add_interfaced_edge(10,7,8,20.0);
+
+            }
+            else if(cmp_organique == m_vertices.size())
+            {
+                add_interfaced_vertex(9, 90, 200, 100, "Organique.jpg",9);
+
+                 add_interfaced_edge(12,10,9,20.0);
+                 add_interfaced_edge(11,8,9,20.0);
+
+            }
+             else if(cmp_vers == m_vertices.size())
+            {
+                add_interfaced_vertex(10, 90, 200, 100, "Vers.jpg",10);
+
+                 add_interfaced_edge(0,10,7,20.0);
+                 add_interfaced_edge(12,10,9,20.0);
+
+            }
+             else if(cmp_potion == m_vertices.size())
+            {
+                add_interfaced_vertex(11, 90, 200, 100, "Potion.jpg",11);
+
+                 add_interfaced_edge(13,0,11,20.0);
+
+            }
+
+
             else std::cout << "L'espece selectionnee est deja presente" << std::endl;
+
+
+
 
         sauvegarder(file_name);
         chargement_fichier(file_name);
@@ -506,8 +690,11 @@ void Graph::supprimer_sommet(int id_sommet, std::string file_name)
         for(int i=0; i<ind_aretes.size(); i++)
         {
             m_edges.erase(ind_aretes[i]);
+            nb_aretes_mortes++;
         }
     }
+
+    nb_morts++;
 
     sauvegarder(file_name);
     chargement_fichier(file_name);
